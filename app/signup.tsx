@@ -5,7 +5,6 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function SignUpScreen() {
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
@@ -31,7 +30,8 @@ export default function SignUpScreen() {
         password: password,
       };
       try {
-        const response = await fetch("http://192.168.1.4:3000/user/signup", {
+        const api_url = process.env.EXPO_PUBLIC_API_URL;
+        const response = await fetch(api_url + "/user/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),

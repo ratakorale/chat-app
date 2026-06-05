@@ -6,7 +6,6 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function SignInScreen() {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +25,8 @@ export default function SignInScreen() {
         password: password,
       };
       try {
-        const response = await fetch("http://192.168.1.4:3000/user/login", {
+        const api_url = process.env.EXPO_PUBLIC_API_URL;
+        const response = await fetch(api_url + "/user/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(logindata),
@@ -34,8 +35,10 @@ export default function SignInScreen() {
         if (response.ok) {
           const data = await response.json();
           console.log(data.user);
+
           await AsyncStorage.setItem("user", JSON.stringify(data.user));
           alert("login success");
+          router.push("/(tabs)/home");
         } else {
           const data = await response.json();
           console.log(data.msg);

@@ -18,6 +18,7 @@ export default function RootLayout() {
       >
         <Stack.Screen name="index" options={{ title: "Sign In" }} />
         <Stack.Screen name="signup" options={{ title: "Sign Up" }} />
+        <Stack.Screen name="(tabs)" />
       </Stack>
     </SafeAreaProvider>
   );
